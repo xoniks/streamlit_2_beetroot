@@ -1,4 +1,5 @@
-def calculate_wage(hour, rate):
+import streamlit as st
+
 def form_callback():
     st.write(st.session_state.my_slider)
     st.write(st.session_state.my_checkbox)
