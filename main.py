@@ -27,11 +27,15 @@ def reset_parking_lots():
 parking_lots = load_parking_lots()
 
 def parking_app():
+    global parking_lots  # Make parking_lots a global variable
+
     st.title("Parking App")
 
     # Reset parking lots at 7 PM
-    if reset_parking_lots():
-        parking_lots = reset_parking_lots()
+    reset_result = reset_parking_lots()
+    if reset_result:
+        parking_lots = reset_result
+        save_parking_lots(parking_lots)
         st.success("Parking lots reset at 7 PM.")
 
     # Sidebar to display worker information
