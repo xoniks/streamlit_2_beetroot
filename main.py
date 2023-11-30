@@ -1,16 +1,9 @@
-import streamlit as st 
-
-
-st.title('Hello to our wage app :sunglasses:')
-
-hours = st.number_input('Insert a hours', step=1)
-rates = st.number_input('Insert a rate')
-
-
 def calculate_wage(hour, rate):
-    return hour * rate
+def form_callback():
+    st.write(st.session_state.my_slider)
+    st.write(st.session_state.my_checkbox)
 
-
-if st.button('Calculate wage!'):
-    result = calculate_wage(hours,rates)
-    st.write('The current number is ', result)
+with st.form(key='my_form'):
+    slider_input = st.slider('My slider', 0, 10, 5, key='my_slider')
+    checkbox_input = st.checkbox('Yes or No', key='my_checkbox')
+    submit_button = st.form_submit_button(label='Submit', on_click=form_callback)
