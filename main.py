@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import datetime
 
 # Load or initialize parking lot status from a JSON file
 PARKING_LOTS_FILE = "parking_lots.json"
@@ -15,16 +16,27 @@ def save_parking_lots(parking_lots):
     with open(PARKING_LOTS_FILE, "w") as file:
         json.dump(parking_lots, file)
 
+def reset_parking_lots():
+    # Reset parking lots at 7 PM every day
+    now = datetime.datetime.now()
+    if now.hour == 19 and now.minute == 0 and now.second == 0:
+        return {f"Lot {i + 1}": None for i in range(10)}
+    return None
+
 # Initialize parking lot status
 parking_lots = load_parking_lots()
 
 def parking_app():
     st.title("Parking App")
 
+    # Reset parking lots at 7 PM
+    if reset_parking_lots():
+        parking_lots = reset_parking_lots()
+        st.success("Parking lots reset at 7 PM.")
+
     # Sidebar to display worker information
     st.sidebar.title("Worker Information")
-    worker_id = st.sidebar.selectbox("Select Worker ID", range(1, 11))
-    worker_name = f"Worker {worker_id}"
+    worker_name = st.sidebar.text_input("Enter Worker Name", "")
 
     # Main content
     st.write(f"Welcome, {worker_name}!")
