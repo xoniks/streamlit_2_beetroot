@@ -38,6 +38,13 @@ def parking_app():
         save_parking_lots(parking_lots)
         st.success("Parking lots reset at 7 PM.")
 
+    # Sidebar to display worker information
+    st.sidebar.title("Worker Information")
+    worker_name = st.sidebar.text_input("Enter Worker Name", "")
+
+    # Main content
+    st.write(f"Welcome, {worker_name}!")
+
     # Display available parking lots
     st.subheader("Available Parking Lots")
     available_lots = [lot for lot, status in parking_lots.items() if status is None]
@@ -45,7 +52,6 @@ def parking_app():
 
     # Book parking lot
     if st.button("Book Parking Lot"):
-        worker_name = st.text_input("Enter Worker Name", "")
         parking_lots[selected_lot] = worker_name
         save_parking_lots(parking_lots)
         st.success(f"{worker_name} successfully booked {selected_lot}.")
